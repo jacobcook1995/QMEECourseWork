@@ -1,0 +1,9 @@
+wc -l ~/CMEECourseWork/Week1/Data/407228326.fasta | cut -f1 -d " "  #1 counts the first file
+wc -l ~/CMEECourseWork/Week1/Data/407228412.fasta | cut -f1 -d " " #2 counts the second file
+wc -l ~/CMEECourseWork/Week1/Data/E.coli.fasta | cut -f1 -d " "  #3 counts the third file
+cat ~/CMEECourseWork/Week1/Data/E.coli.fasta | awk '{if(NR>1)print}' #4 Print Ecoli File without top line
+tail -n +2 ../Data/E.coli.fasta | tr -d '\n' | wc -m | cut -f1 -d " " #5 cuts first line off the document, then removes newlines, then counts characters
+tail -n +2 ../Data/E.coli.fasta | tr -d '\n' | grep -o "ATGC" | wc -l #6 same as before, but then finds all occurances of "ATGC", then counts number of lines this is displayed as
+echo "$(tail -n +2 ../Data/E.coli.fasta | tr -d '\n' | grep -o "A\T" | wc -l)/$(tail -n +2 ../Data/E.coli.fasta | grep "G\|C" | wc -l)" #7 counts A and T's, then G and C's then outputs the fraction
+
+
