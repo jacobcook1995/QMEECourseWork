@@ -1,2 +1,3 @@
 *~ 
 .tmp
+find . -size +100M | cat
