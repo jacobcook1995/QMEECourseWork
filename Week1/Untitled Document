@@ -1,8 +1,0 @@
-Files in Code Directory:
-biolerplate.sh:
-ConcatenateTwoFiles.sh: Shell script to attach two files together
-Countlines.sh: Shell script to count the number of lines in a file
-MyExampleScript.sh: 
-tabtocsv.sh: Shell script to convert a file from tabular format to csv format
-variables.sh: 
-csvtospace.sh: Shell script to convert a file from csv format to space seperated format
