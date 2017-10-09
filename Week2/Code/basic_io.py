@@ -11,7 +11,7 @@ for line in f:
 # close the file
 f.close()
 # Same example, skip blank lines
-f = open('../Sandboc/test.txt', 'r')
+f = open('../Sandbox/test.txt', 'r')
 for line in f:
 	if len(line.strip()) > 0:
 		print line,
