@@ -13,3 +13,4 @@ lc1.py: script that breaks down a list of birds into smaller sub-lists does this
 lc2.py: script that breaks down a list of rainfall into smaller lists based on amount of rain does this via both list comprehension and convential loops
 dictionary.py: script creates a dictionary from hard coded data using list comprehensions
 tuple.py: script that prints a tuple of tuples as indvidual lines through use of list comprehensions
+align_segs.py: script that reads in DNA sequences from a file and then finds the length of the longest overlap and then prints said overlap and its length. Can read two sequences written in csv format.
