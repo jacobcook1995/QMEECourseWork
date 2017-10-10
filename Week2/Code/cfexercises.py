@@ -32,15 +32,15 @@ while z < 100:
 	z = z + 1
 	
 #What does fooXX do?
-def foo1(x):
+def foo1(x=1):
 	return x ** 0.5
 	
-def foo2(x, y):
+def foo2(x=1, y=1):
 	if x > y:
 		return x
 	return y
 	
-def foo3(x, y, z):
+def foo3(x=1, y=1, z=1):
 	if x > y:
 		tmp = y
 		y = x
@@ -51,7 +51,7 @@ def foo3(x, y, z):
 		y = tmp
 	return [x, y, z]
 	
-def foo4(x):
+def foo4(x=5):
 	result = 1
 	for i in range(1, x + 1):
 		result = result*i
@@ -60,9 +60,18 @@ def foo4(x):
 # This is a recursive function, meaning that the function calls itself
 # read about it at
 # en.wikipedia.org/wiki/Recursion_(computer_science)
-def foo5(x):
+def foo5(x=5):
 	if x == 1:
 		return 1
 	return x * foo5(x - 1)
-	
-foo5(10)
+
+print "foo1(20)"
+print foo1(20)
+print "foo2(32,7)"
+print foo2(32,7)
+print "foo3(3,7,6)"
+print foo3(3,7,6)
+print "foo4(8)"
+print foo4(8)
+print "foo5(10)"
+print foo5(10)
