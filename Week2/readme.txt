@@ -15,4 +15,6 @@ dictionary.py: script creates a dictionary from hard coded data using list compr
 tuple.py: script that prints a tuple of tuples as indvidual lines through use of list comprehensions
 align_segs.py: script that reads in DNA sequences from a file and then finds the length of the longest overlap and then prints said overlap and its length. Can read two sequences written in csv format.
 test_control_flow.py: script that tests one of the functions in control flow in order to demonstrate doctest
+debugme.py: Python script to test the debugger on
+test_oaks.py: Python script to be fixed using the Python debugger.
 
