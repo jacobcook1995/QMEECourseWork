@@ -10,6 +10,6 @@ cfexercises: Python script to demonstrate the control flow. First part is split 
 loops.py: A python script that demonstrates both for loops and while loops
 oaks.py: A python script that finds the oak trees from a list using both for loops and species comprehensions, this is done for both upper and lower case.
 lc1.py: script that breaks down a list of birds into smaller sub-lists does this via both list comprehension and convential loops.
-lc2.py:
-dictionary.py:
-tuple.py:
+lc2.py: script that breaks down a list of rainfall into smaller lists based on amount of rain does this via both list comprehension and convential loops
+dictionary.py: script creates a dictionary from hard coded data using list comprehensions
+tuple.py: script that prints a tuple of tuples as indvidual lines through use of list comprehensions
