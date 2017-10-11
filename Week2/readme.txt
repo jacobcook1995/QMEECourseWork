@@ -17,4 +17,4 @@ align_segs.py: script that reads in DNA sequences from a file and then finds the
 test_control_flow.py: script that tests one of the functions in control flow in order to demonstrate doctest
 debugme.py: Python script to test the debugger on
 test_oaks.py: Python script to be fixed using the Python debugger.
-
+align_seqs_fasta.py: script that reads in DNA sequences from files and then finds the length of the longest overlap and then prints said overlap and its length. Can read two sequences written in seperate fasta files if no fasta files are specified it automatically uses two specified in Data
