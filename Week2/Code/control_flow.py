@@ -8,12 +8,27 @@ __version__ = '0.0.1'
 
 # imports
 import sys # module to interface our program with the operating system
+import doctest
 
 #constants can go here
 
 # functions can go here
 
 def even_or_odd(x=0): # if not specified, x should take value 0.
+	"""Find whether a number x is even or odd.
+	>>> even_or_odd(10)
+	'10 is Even!'
+	>>> even_or_odd(5)
+	'5 is Odd!'
+	
+	whenever a float is provided, then the closest integer is used:
+	>>> even_or_odd(3.2)
+	'3 is Odd!'
+	
+	in case of negative numbers, the positive is taken:
+	>>> even_or_odd(-2)
+	'-2 is Even!'
+	"""
 	
 	"""Find whether a number x is even or odd."""
 	if x % 2 == 0: #The conditional if
@@ -37,6 +52,10 @@ def largest_divisor_five(x=120):
 
 def is_prime(x=70):
 	"""Find whether an integer is prime."""
+	"""Find whether a number x is even or odd.
+	>>> is_prime(10)
+	'10 is not a prime: 10 is a divisor'
+	"""
 	for i in range(2, x): # "range" returns a sequence of integers
 		if x % i == 0:
 			print "%d is not a prime: %d is a divisor" % (x, i) #Print formatted text "%d %s %f %e" % (20,"30",0.0003,0.00003)
@@ -63,7 +82,11 @@ def main(argv):
 	print is_prime(59)
 	print find_all_primes(100)
 	return 0
+	
+doctest.testmod()
 		
 if (__name__ == "__main__"): #makes sure the "main" function is called from commandline
 		status = main(sys.argv)
 		sys.exit(status)
+
+

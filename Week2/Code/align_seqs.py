@@ -5,6 +5,7 @@
 """
 # import csv so I can use csv reader
 import csv
+import doctest
 
 # Need to open csv file to be read from
 f = open('../Data/Sequence.csv','r')
@@ -34,26 +35,42 @@ else:
 # by returning the number of matches 
 # starting from arbitrary startpoint
 def calculate_score(s1, s2, l1, l2, startpoint):
+	"""Checks that not matching and matching works for short strings
+	>>> calculate_score("A", "T", 1, 1, 0)
+	-
+	T
+	A
+	0
+	<BLANKLINE>
+	0
+	>>> calculate_score("A", "A", 1, 1, 0)
+	*
+	A
+	A
+	1
+	<BLANKLINE>
+	1
+	"""
     # startpoint is the point at which we want to start
-    matched = "" # contains string for alignement
-    score = 0
-    for i in range(l2):
-        if (i + startpoint) < l1:
-            # if its matching the character
-            if s1[i + startpoint] == s2[i]:
-                matched = matched + "*"
-                score = score + 1
-            else:
-                matched = matched + "-"
+	matched = "" # contains string for alignement
+	score = 0
+	for i in range(l2):
+		if (i + startpoint) < l1:
+			# if its matching the character
+			if s1[i + startpoint] == s2[i]:
+				matched = matched + "*"
+				score = score + 1
+			else:
+				matched = matched + "-"
 
-    # build some formatted output
-    print "." * startpoint + matched           
-    print "." * startpoint + s2
-    print s1
-    print score 
-    print ""
+	# build some formatted output
+	print "." * startpoint + matched           
+	print "." * startpoint + s2
+	print s1
+	print score 
+	print ""
 
-    return score
+	return score
 
 calculate_score(s1, s2, l1, l2, 0)
 calculate_score(s1, s2, l1, l2, 1)
@@ -72,3 +89,5 @@ for i in range(l1):
 print my_best_align
 print s1
 print "Best score:", my_best_score
+
+doctest.testmod()

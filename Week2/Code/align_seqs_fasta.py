@@ -18,6 +18,22 @@ import sys # module to interface our program with the operating system
 # by returning the number of matches 
 # starting from arbitrary startpoint
 def calculate_score(s1, s2, l1, l2, startpoint):
+        """Checks that not matching and matching works for short strings
+	>>> calculate_score("A", "T", 1, 1, 0)
+	-
+	T
+	A
+	0
+	<BLANKLINE>
+	0
+	>>> calculate_score("A", "A", 1, 1, 0)
+	*
+	A
+	A
+	1
+	<BLANKLINE>
+	1
+	"""
 	# startpoint is the point at which we want to start
 	matched = "" # contains string for alignement
 	score = 0
