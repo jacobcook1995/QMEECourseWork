@@ -26,7 +26,7 @@ def is_an_oak(name):
     
 print(is_an_oak.__doc__)
 
-# Starts the dubugging session here
+
 def main(argv):
     f = open('../Data/TestOaksData.csv','rb')
     g = open('../Data/JustOaksData.csv','wb')
