@@ -21,3 +21,6 @@ align_seqs_fasta.py: script that reads in DNA sequences from files and then find
 LV1.py: A script that solves the Lotka-Volterra model and plots the results
 profileme.py: A script that uses a lot of steps to do nothing, used to test profiling code
 timeitme.py: A script to test time consumption of basic operations
+LV2.py: Does the same as LV1.py but now takes user input for r, a, z, e
+run_LV.sh: python script to run LV python scripts
+
