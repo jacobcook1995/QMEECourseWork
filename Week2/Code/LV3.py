@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-""" The typical Lotka-Volterra Model simulated using scipy
+""" The discrete-time Lotka-Volterra Model simulated using scipy
     This script take user input to set model parameters
 """
 
@@ -16,17 +16,17 @@ K = 50.
 
 # import matplotlip.pylab as p 
 
-
-def dR_dt(pops, t=0):
+## Function gives change in each step
+def dR_dt(Pops):
     """ Returns the growth rate of predator and prey populations at any 
     given time step """
     
-    R = pops[0]
-    C = pops[1]
-    dRdt = r*R - r*R*R/K - a*R*C 
-    dydt = -z*C + e*a*R*C
+    R_t = Pops[0]
+    C_t = Pops[1]
+    R_t1 = r*R_t - r*R_t*R_t/K - a*R_t*C_t 
+    C_t1 = -z*C_t + e*a*R_t*C_t
     
-    return sc.array([dRdt, dydt])
+    return sc.array([R_t1, C_t1])
 
 
 def main(argv):
@@ -54,16 +54,27 @@ def main(argv):
 	else:
 		e = 0.75 # Consumer production efficiency
 	
-	# Now define time -- integrate from 0 to 15, using N points:
-	t = sc.linspace(0, 150,  N)
-	
+	## Sets initial populations
 	x0 = 10
 	y0 = 5 
 	z0 = sc.array([x0, y0]) # initials conditions: 10 prey and 5 predators per unit area
-
-	pops, infodict = integrate.odeint(dR_dt, z0, t, full_output=True)
-
-	infodict['message']     # >>> 'Integration successful.'
+	
+	# Now define time and max time -- integrate from 0 to 15, using N points:
+	t_m = 150
+	dt = float(t_m)/float(N)
+	i = 0
+	## Keep old time function so there's something to plot against
+	t = sc.linspace(0, t_m,  N+1)
+	# preallocate memory for pops
+	pops = sc.zeros((N+1, 2))
+	pops[0] = z0
+	## For loop to succesively integrate the function
+	## Just gonna use Euler as it's easiest
+	while i < N:
+		dRC = dR_dt(pops[i])# Get change from function
+		pops[i+1, 0] = pops[i, 0] + dt*dRC[0] # apply it to each pop in term
+		pops[i+1, 1] = pops[i, 1] + dt*dRC[1]
+		i += 1
 
 	prey, predators = pops.T # What's this for?
 	f1 = p.figure() #Open empty figure object
@@ -75,7 +86,7 @@ def main(argv):
 	p.ylabel('Population')
 	p.title('Consumer-Resource population dynamics:\n with r = %f, a = %f, z = %f, e = %f' % (r, a, z, e))
 	p.show()
-	f1.savefig('../Results/prey_and_predators_2.pdf') #Save figure
+	f1.savefig('../Results/prey_and_predators_3.pdf') #Save figure
 	## Now need to output the population sizes
 	if (prey[N-1] - prey[N-2]) ** 2 < 0.0000000000001: 
 		print 'Steady Resource population = {}'.format(prey[N-1])

@@ -23,4 +23,6 @@ profileme.py: A script that uses a lot of steps to do nothing, used to test prof
 timeitme.py: A script to test time consumption of basic operations
 LV2.py: Does the same as LV1.py but now takes user input for r, a, z, e
 run_LV.sh: python script to run LV python scripts
+LV3.py: Python script for a discrete time version of the LV model
+LV4.py: Python script for dicrete time model with fluctuations
 
