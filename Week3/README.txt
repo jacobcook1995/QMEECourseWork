@@ -13,3 +13,7 @@ next.R: R script that demonstrates next command
 Ricker.R: R script that implements the Ricker Model
 Vectorise2.R: R script that implements the stochastic Ricker Model, I then vectorise the for loop to speed it up
 sample.R: R script that samples from a population and then uses a function to find the mean
+try.R: R script to demonstrate use of try and catch functions
+browse.R: R script to demonstrate the use of browse debugging
+Vectorize1.py: Python version of Vectorize1.R
+Vectorize2.py: Python version of Vectorize2.R

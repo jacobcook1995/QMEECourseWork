@@ -6,13 +6,16 @@ doit <- function(x){
 	if(length(unique(x)) > 30){ # only take mean if sample was sufficient
 		print(paste("Mean of this sample was:", as.character(mean(x))))
 	}
+	else {
+		stop("Couldn't calculate mean: too few unique points!")
+	}
 }
 
 ## Run 100 iterations using vectorization
-result <- lapply(1:100, function(i) doit(x))
+result <- lapply(1:100, function(i) try(doit(x),FALSE))
 
 ## Or using a for loop:
 result <- vector("list", 100) #Preallocate/Initialize
 for(i in 1:100) {
-	result[[i]] <- doit(x)
+	result[[i]] <- try(doit(x), FALSE)
 }
