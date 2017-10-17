@@ -43,7 +43,7 @@ def main(argv):
 	
 	with open(filepath, 'r') as csvfile:
 		csvfile.readline() # skip header
-		spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+		spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
 		for row in spamreader:
 			heights[i+1] = Height(float(row[2]),float(row[1]))
 			names[i+1] = row[0]

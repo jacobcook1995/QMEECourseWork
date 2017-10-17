@@ -5,3 +5,11 @@ get_TreeHeight.R: R script to take in a given csv calculate tree heights and the
 run_get_TreeHeight.R: a shell script to run the get_TreeHeight.R script
 get_TreeHeight.py: Python script to do the same as get_TreeHeight.R
 control.R: R script to demonstrate use of control functions in R
+Vectorize1.R: R script to demonstrate the merits of vectorization
+apply1.R: R script to demonstrate functionality of apply commands
+apply2.R: R script to demonstrate use of apply on own functions
+break.R: R script that demonstrates break command
+next.R: R script that demonstrates next command
+Ricker.R: R script that implements the Ricker Model
+Vectorise2.R: R script that implements the stochastic Ricker Model, I then vectorise the for loop to speed it up
+sample.R: R script that samples from a population and then uses a function to find the mean
