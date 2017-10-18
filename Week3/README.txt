@@ -19,4 +19,5 @@ Vectorize1.py: Python version of Vectorize1.R
 Vectorize2.py: Python version of Vectorize2.R
 run_Vector.sh: Bash script to run the Vectorize files
 TAutoCorr.R: R script that estimates the correlation of temperatures
-Temperatures.tex: Tex file writing up the results from TAutoCorr.R
+Mapping.R: R script that demonstrates how to make maps using R
+
