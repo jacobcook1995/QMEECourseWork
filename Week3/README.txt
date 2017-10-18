@@ -17,3 +17,6 @@ try.R: R script to demonstrate use of try and catch functions
 browse.R: R script to demonstrate the use of browse debugging
 Vectorize1.py: Python version of Vectorize1.R
 Vectorize2.py: Python version of Vectorize2.R
+run_Vector.sh: Bash script to run the Vectorize files
+TAutoCorr.R: R script that estimates the correlation of temperatures
+Temperatures.tex: Tex file writing up the results from TAutoCorr.R
