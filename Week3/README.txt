@@ -20,4 +20,6 @@ Vectorize2.py: Python version of Vectorize2.R
 run_Vector.sh: Bash script to run the Vectorize files
 TAutoCorr.R: R script that estimates the correlation of temperatures
 Mapping.R: R script that demonstrates how to make maps using R
+PP_Lattice.R: R script that demonstrates saving plots as a pdf and saving data to a csv file
+PP_Regress.R: R script that performs a regression on data
 
