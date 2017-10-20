@@ -13,19 +13,24 @@ library(lattice)
 # Read in my csv data
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 
-par(mfcol=c(5,1)) #initialize multi-paneled plot
-# PANEL1
-par(mfg = c(1,1))
-qplot(log(Prey.mass), log(Predator.mass), data = MyDF, geom = c("point", "smooth"))
+## Create pdf to write plot to
+pdf("../Results/PP_Regress_Plots.pdf", 11.7, 8.3)
+p <- ggplot(MyDF, aes(x = Prey.mass, y = Predator.mass, colour = Predator.lifestage)) 
+p <- p + geom_point(shape=3) + facet_grid(Type.of.feeding.interaction ~ .)
+p <- p + theme(legend.position="bottom", aspect.ratio = 1/2)
+p <- p + xlab("Prey mass in grams") + ylab("Predator mass in grams")
+p <- p + scale_x_log10() + scale_y_log10()
+p <- p + guides(colour=guide_legend(nrow=1))
+p <- p + geom_smooth(method = "lm", fullrange = TRUE, size = 0.5)
+suppressWarnings(print(p))
+invisible(dev.off())
 
-# PANEL2
-par(mfg = c(2,1))
-
-# PANEL3
-par(mfg = c(3,1))
-
-# PANEL4
-par(mfg = c(4,1))
-
-# PANEL5
-par(mfg = c(5,1))
+## Now do the regression analysis for each line
+for(type in unique(MyDF$Type.of.feeding.interaction)) {
+	type_data <- subset(MyDF, Type.of.feeding.interaction == type)
+	for(stage in unique(type_data$Predator.lifestage)) {
+		stage_data <- subset(type_data, Predator.lifestage == stage)
+		
+		
+		}
+}
