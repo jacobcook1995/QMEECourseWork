@@ -22,4 +22,5 @@ TAutoCorr.R: R script that estimates the correlation of temperatures
 Mapping.R: R script that demonstrates how to make maps using R
 PP_Lattice.R: R script that demonstrates saving plots as a pdf and saving data to a csv file
 PP_Regress.R: R script that performs a regression on data
+PP_Regress_loc.R: R script that now splits the analysis by location as well
 

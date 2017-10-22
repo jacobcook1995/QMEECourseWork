@@ -25,12 +25,6 @@ p <- p + geom_smooth(method = "lm", fullrange = TRUE, size = 0.5)
 suppressWarnings(print(p))
 invisible(dev.off())
 
-## Now do the regression analysis for each line
-for(type in unique(MyDF$Type.of.feeding.interaction)) {
-	type_data <- subset(MyDF, Type.of.feeding.interaction == type)
-	for(stage in unique(type_data$Predator.lifestage)) {
-		stage_data <- subset(type_data, Predator.lifestage == stage)
-		
-		
-		}
-}
+model <- lm(data = MyDF, Predator.mass ~ Type.of.feeding.interaction:Predator.lifestage)
+df = as.data.frame(summary(model)$coef)
+write.csv(df, file = "../Results/PP_Regression_Results.csv",row.names=FALSE)
