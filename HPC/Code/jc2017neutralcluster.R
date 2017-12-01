@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
-# Script to implement neutral theory in R
+# Script to for a single cluster run for a given speciation rate, size, 
+# wall time, interval richness, interval octaves, burn in generations
+# also reads in an output file name
 
 # Clear up old data
 rm(list=ls())
@@ -39,55 +41,6 @@ neutral_step <- function(community){
 	new_community = replace(community, change[1], community[change[2]])
 	return (new_community)
 }
-
-#function to perform several steps
-neutral_generation <- function(community){
-	N = length(community)/2
-	# check if N is whole
-	if (N%%1==0) {
-		# Do nothing in this case
-	} else {
-		N = N + 0.5 # Otherwise make whole
-	}
-	# for loop to carry out multiple simulation steps
-	for (i in 1:N){
-		community = neutral_step(community)
-	}
-	return(community) # return new community
-}
-
-# function to perform neutral theory simulation and return a time series
-neutral_time_series <- function(initial,duration){
-	l = length(initial)
-	time_series <- array(0,dim=c(duration + 1,l))
-	time_series[1,1:l] = initial
-	# iterate using my prior function
-	for (i in 1:duration){
-		time_series[i+1,1:l] = neutral_generation(time_series[i,1:l])
-	}
-	diversity_time_series = cbind(numeric(duration+1))
-	for (i in 1:(duration+1)){
-		diversity_time_series[i] = species_richness(time_series[i,1:l])
-	}
-	# now return this prior function
-	return(diversity_time_series)
-}
-
-# function to plot graph 
-question_8 <- function(){
-	# Run for 100 individuals for 200 generations
-    neutral_time_series = neutral_time_series(initialise_max(100), 200)
-    jpeg('../Results/diversityplot.jpg')
-    x <- plot(1:201,neutral_time_series, ann = FALSE)
-    title(xlab="Time", col.lab=rgb(0,0.5,0))
-    title(ylab="Species Diversity", col.lab=rgb(0,0.5,0))
-    title(main="Species Diversity with Time", col.main="red", font.main=4)
-    dev.off()
-    return(0) # shouldn't return anything as this function is about plotting the graph
-}
-
-# Call function and plot graph
-c = question_8()
 
 # function to perform a step of the neutral model with speciation
 neutral_step_speciation <- function(community,v){
@@ -131,38 +84,6 @@ neutral_generation_speciation <- function(community,v){
 	return(community) # return new community
 }
 
-# function to simulate a certain number of generations with speciation
-neutral_time_series_speciation <- function(initial,v,duration){
-	l = length(initial)
-	time_series <- array(0,dim=c(duration + 1,l))
-	time_series[1,1:l] = initial
-	# iterate using my prior function
-	for (i in 1:duration){
-		time_series[i+1,1:l] = neutral_generation_speciation(time_series[i,1:l],v)
-	}
-	diversity_time_series = cbind(numeric(duration+1))
-	for (i in 1:(duration+1)){
-		diversity_time_series[i] = species_richness(time_series[i,1:l])
-	}
-	# now return this prior function
-	return(diversity_time_series)
-}
-
-# function to plot time series for speciation
-question_12 <- function(){
-	# Run for 100 individuals for 200 generations
-    neutral_time_series = neutral_time_series_speciation(initialise_max(100),0.1, 200)
-    jpeg('../Results/diversityplotspeciation.jpg')
-    x <- plot(1:201,neutral_time_series,ann = FALSE)
-    title(xlab="Time", col.lab=rgb(0,0.5,0))
-    title(ylab="Species Diversity", col.lab=rgb(0,0.5,0))
-    title(main="Species Diversity with Time", col.main="red", font.main=4)
-    dev.off()
-	return(0)
-}
-# call function 
-d = question_12()
-
 # function to find species abundances
 species_abundance <- function(community){
 	l = species_richness(community)
@@ -193,25 +114,71 @@ octaves <- function(abundances){
 	return(octs)
 }
 
-# function to sum two vectors of differing length
-sum_vect <- function(x,y){
-	a = length(x)
-	b = length(y)
-	if (a == b){
-		vect <- vector(mode = "numeric", length = a) # preallocate
-		vect = x + y
+cluster_run <- function(speciation_rate,size,wall_time,interval_rich,interval_oct,burn_in_generations,output_file_name){
+	# wall time is in minutes, speciation rate elsewhere refered to as v probabilty of speciation rather than replacement
+	# burn in period is the number of generations to record species richness for
+	# interval_rich gives how many genrations should occcur between recordings of the species richness,
+	# interval_oct is equivalent but for the species abundance octaves
+	PTM <- proc.time() # total simulation time clock started
+	community = initialise_min(size)
+	Time = 60*wall_time # convert wall_time into seconds
+	wall_time_finished = FALSE
+	# preallocate vector
+	spec_rich <- vector(mode = "numeric", length = (burn_in_generations/interval_rich)+1)
+	spec_rich[1] = species_richness(community)
+	# make new list for octaves
+	octs = list(octaves(species_abundance(community)))
+	i = 0 # set generation number to 0
+    # Start the clock!
+    ptm <- proc.time()
+    while (wall_time_finished == FALSE){
+		community = neutral_generation_speciation(community,speciation_rate)
+		i = i+1
+		# if loop to decide if species richness should be stored
+		if(i <= burn_in_generations && i%%interval_rich == 0){
+			spec_rich[(i/interval_rich)+1] = species_richness(community)
+		}
+		# if loop to decide if species abundance octaves should be stored
+		if(i%%interval_oct == 0){
+			octs[[1+(i/interval_oct)]] <- octaves(species_abundance(community))
+		}
+		# Stop the clock
+        time = proc.time()[3] - ptm[3]
+        if (time > Time){
+			wall_time_finished = TRUE # set true and end loop once time is elapsed
+		}
 	}
-	if (a < b){
-		vect <- vector(mode = "numeric", length = b) # preallocate
-		vect[1:a] = x[1:a] + y[1:a]
-		vect[(a+1):b] = y[(a+1):b]
-	}
-	if (b < a){
-		vect <- vector(mode = "numeric", length = a) # preallocate
-		vect[1:b] = x[1:b] + y[1:b]
-		vect[(b+1):a] = x[(b+1):a]
-	}
-	
-	return(vect)
+	TIME = proc.time()[3] - PTM[3] # Total simulation time found
+	data = list(spec_rich,octs,community,TIME,speciation_rate,size,wall_time,interval_rich,interval_oct,burn_in_generations)
+	# save data to file given by file name
+	saveRDS(data, output_file_name)
+
+	return() # returning NULL as it doesn't actually matter what is returned, this might be problematic with HPC though
 }
 
+# Get iteration number from system, commented out for now
+# iter <- as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
+iter = 1 #################################DELETE!!!!!!!##################################
+set.seed(iter) # seed random numbers
+speciation = 0.005102 # my speciation rate
+# determine population size J
+if ((iter)%%4 == 1){
+	J = 500
+} else if ((iter)%%4 == 2){
+	J = 1000
+} else if ((iter)%%4 == 3){
+	J = 2500
+} else if ((iter)%%4 == 0){
+	J = 5000
+}
+# use J to obtain octave intervals and burn times
+int_oct = J/10
+burn_t = 8*J
+# Now use iter to make filename
+filename = paste("my_test_file", iter, sep = "_")
+outfilename = paste(filename, ".rda", sep = "")
+# rich_int is 1 for all simulations
+rich_int = 1
+# convert time in hours to time in minutes
+runtime = 11.5*60
+cluster_run(speciation,J,runtime,rich_int,int_oct,burn_t,outfilename)
